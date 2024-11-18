@@ -34,6 +34,7 @@ public class InputManager : MonoBehaviour
     public InputPattern decide;
     public InputPattern dash;
     public InputPattern menu;
+    public InputPattern dPad;
 
     void Start()
     {
@@ -44,6 +45,7 @@ public class InputManager : MonoBehaviour
         decide = new InputPattern();
         dash = new InputPattern();
         menu = new InputPattern();
+        dPad = new InputPattern();
     }
 
     public void SetIsGetInput()
@@ -55,6 +57,7 @@ public class InputManager : MonoBehaviour
         decide.SetIsGetInput(false);
         dash.SetIsGetInput(false);
         menu.SetIsGetInput(false);
+        dPad.SetIsGetInput(false);
     }
 
     public void GetAllInput()
@@ -66,6 +69,7 @@ public class InputManager : MonoBehaviour
         decide.GetInput("Decide");
         dash.GetInput("Dash");
         menu.GetInput("Menu");
+        dPad.GetInput("DPad");
     }
 
     public bool IsTrgger(InputPattern _inputPattern)

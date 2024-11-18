@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8565660738882957173}
   - component: {fileID: 949089764586782657}
   - component: {fileID: -7587244141481264162}
+  - component: {fileID: 8736141316205918756}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -66,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 07c4e69e54daa9f45a5d8c3fcabf5997, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -100,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11a29306f35093c4cb6b1ed2ecd0a562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManagerObj: {fileID: 0}
 --- !u!114 &-7587244141481264162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,14 +114,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7409e686e0c3d746a13a51785cdcac3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManagerObj: {fileID: 0}
-  groundTransform: {fileID: 0}
   stalkerPower: 15
-  moveSpeed: 6
+  normalSpeed: 6
   dashRange: 3
   dashIntervalTime: 0.5
-  jumpDistance: 3
-  jumpSpeed: 50
-  hangTime: 0.3
-  gravityMax: 50
-  addGravity: 50
+  runSpeed: 12
+  dushGauge: {fileID: 0}
+--- !u!114 &8736141316205918756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544789953480720336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a34d65dff44394abc720356002f386, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageValue: 1
+  attackIntervalTime: 0.3
+  adjustDistance: 0.8
+  slashRange: 3
+  hitPrefab: {fileID: 7596689838677904813, guid: 0a1bea8d2c21f4f4aa86316089e63953, type: 3}
+  slashPrefab: {fileID: 4541742321681109738, guid: ba3f5a7a1a44d054581492d8c21a2782, type: 3}
+  attackGauge: {fileID: 0}
+  bossCoreTransform: {fileID: 0}
