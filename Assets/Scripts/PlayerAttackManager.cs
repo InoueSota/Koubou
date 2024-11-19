@@ -62,6 +62,9 @@ public class PlayerAttackManager : MonoBehaviour
 
                     // HitEffectçÏê¨
                     Instantiate(hitPrefab, pillarRePosition + diffVector, Quaternion.identity);
+
+                    // îΩìÆ
+                    moveManager.Reaction(toPlayer);
                 }
             }
 

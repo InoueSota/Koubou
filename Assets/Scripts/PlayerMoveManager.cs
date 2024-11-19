@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,7 @@ public class PlayerMoveManager : MonoBehaviour
 
     [Header("Move")]
     [SerializeField] private float stalkerPower;
+    [SerializeField] private float normalStalkerPower;
     [SerializeField] private float normalSpeed;
     private float moveSpeed;
     private Vector3 inputVector;
@@ -29,6 +31,12 @@ public class PlayerMoveManager : MonoBehaviour
     [Header("Run")]
     [SerializeField] private float runSpeed;
     private bool isRunning;
+
+    [Header("Reaction")]
+    [SerializeField] private float reactionStalkerPower;
+    [SerializeField] private float reactionRange;
+    [SerializeField] private float reactionTime;
+    private float reactionTimer;
 
     [Header("UI")]
     [SerializeField] private Image dushGauge;
@@ -114,6 +122,9 @@ public class PlayerMoveManager : MonoBehaviour
             // 移動量を加算する
             targetPosition += dushVector;
 
+            // 前転する
+            transform.DORotate(Vector3.right * 360f, 0.4f, RotateMode.LocalAxisAdd);
+
             // ダッシュが連続で行えないようインターバルを設定する
             dashIntervalTimer = dashIntervalTime;
         }
@@ -144,8 +155,15 @@ public class PlayerMoveManager : MonoBehaviour
     }
     void StalkerPosition()
     {
+        float t = reactionTimer / reactionTime;
+        stalkerPower = Mathf.Lerp(normalStalkerPower, reactionStalkerPower, 1 - (1 - t) * (1 - t));
+
         // 目標地点を目指す
         transform.position += (targetPosition - transform.position) * (stalkerPower * Time.deltaTime);
+
+        // タイマーの更新
+        reactionTimer -= Time.deltaTime;
+        reactionTimer = Mathf.Clamp(reactionTimer, 0f, 1f);
     }
 
     void CheckAddPosition(float _addValue, bool _isXaxis)
@@ -214,8 +232,14 @@ public class PlayerMoveManager : MonoBehaviour
         }
     }
 
-    public void SetTargetPosition()
+    public void Reaction(Vector3 _toPlayer)
     {
+        // 反動の設定
+        targetPosition += _toPlayer * reactionRange;
+        targetPosition.y = 0.5f;
+
+        // Reaction時間の設定
+        reactionTimer = reactionTime;
 
         // ステージ内に収める
         ClampInStage();
