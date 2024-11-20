@@ -7,10 +7,14 @@ public class PlayerAttackManager : MonoBehaviour
     private PlayerManager manager;
     private PlayerMoveManager moveManager;
 
-    [Header("Parameter")]
+    [Header("Attack Parameter")]
     [SerializeField] private float damageValue;
     [SerializeField] private float attackIntervalTime;
     private float attackIntervalTimer;
+
+    [Header("Bullet Parameter")]
+    [SerializeField] private float fireIntervalTime;
+    private float fireIntervalTimer;
 
     [Header("Hit")]
     [SerializeField] private float adjustDistance;
@@ -18,12 +22,16 @@ public class PlayerAttackManager : MonoBehaviour
     [Header("Slash")]
     [SerializeField] private float slashRange;
 
+    [Header("Bullet")]
+    [SerializeField] private GameObject bulletPrefab;
+
     [Header("EffectPrefabs")]
     [SerializeField] private GameObject hitPrefab;
     [SerializeField] private GameObject slashPrefab;
 
     [Header("UI")]
     [SerializeField] private Image attackGauge;
+    [SerializeField] private Image fireGauge;
 
     [Header("Other Object")]
     [SerializeField] private Transform bossCoreTransform;
@@ -40,6 +48,7 @@ public class PlayerAttackManager : MonoBehaviour
     public void ManualUpdate()
     {
         Attack();
+        Fire();
     }
     void Attack()
     {
@@ -87,6 +96,34 @@ public class PlayerAttackManager : MonoBehaviour
             Instantiate(slashPrefab, transform.position, Quaternion.identity);
 
             attackIntervalTimer = attackIntervalTime;
+        }
+    }
+    void Fire()
+    {
+        // 射撃のインターバル計測
+        fireIntervalTimer -= Time.deltaTime;
+        fireGauge.fillAmount = 1f - fireIntervalTimer / fireIntervalTime;
+
+        // 射撃を行う
+        if (fireIntervalTimer <= 0f && (manager.GetInputManager().IsPush(manager.GetInputManager().rTrigger) || manager.GetInputManager().IsPush(manager.GetInputManager().yButton)))
+        {
+            // Bulletの生成
+            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+
+            // 移動方向（初期値は進行方向）
+            Vector3 moveVector = moveManager.GetSaveVector();
+
+            // 狙いを定めていたら移動方向をボスに向ける
+            if (manager.GetInputManager().IsPush(manager.GetInputManager().lTrigger))
+            {
+                moveVector = bossCoreTransform.position - transform.position;
+            }
+
+            // Bulletに移動方向を代入
+            bullet.GetComponent<BulletManager>().Initialize(bossCoreTransform, moveVector, adjustDistance);
+
+            // インターバルの再設定
+            fireIntervalTimer = fireIntervalTime;
         }
     }
     bool IsHitObject(ref Vector3 _objectPosition)

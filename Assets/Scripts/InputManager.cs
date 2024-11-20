@@ -29,6 +29,9 @@ public class InputManager : MonoBehaviour
     // “ü—Í‚ÌŽí—Þ
     public InputPattern horizontal;
     public InputPattern vertical;
+    public InputPattern lTrigger;
+    public InputPattern rTrigger;
+    public InputPattern yButton;
     public InputPattern attack;
     public InputPattern cancel;
     public InputPattern decide;
@@ -40,6 +43,9 @@ public class InputManager : MonoBehaviour
     {
         horizontal = new InputPattern();
         vertical = new InputPattern();
+        lTrigger = new InputPattern();
+        rTrigger = new InputPattern();
+        yButton = new InputPattern();
         attack = new InputPattern();
         cancel = new InputPattern();
         decide = new InputPattern();
@@ -52,6 +58,9 @@ public class InputManager : MonoBehaviour
     {
         horizontal.SetIsGetInput(false);
         vertical.SetIsGetInput(false);
+        lTrigger.SetIsGetInput(false);
+        rTrigger.SetIsGetInput(false);
+        yButton.SetIsGetInput(false);
         attack.SetIsGetInput(false);
         cancel.SetIsGetInput(false);
         decide.SetIsGetInput(false);
@@ -64,6 +73,9 @@ public class InputManager : MonoBehaviour
     {
         horizontal.GetInput("Horizontal");
         vertical.GetInput("Vertical");
+        lTrigger.GetInput("LTrigger");
+        rTrigger.GetInput("RTrigger");
+        yButton.GetInput("YButton");
         attack.GetInput("Attack");
         cancel.GetInput("Cancel");
         decide.GetInput("Decide");

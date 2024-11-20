@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image bossName;
     [SerializeField] private Image bossHpGaugeFill;
     [SerializeField] private Image top;
+    [SerializeField] private Image topGauge;
     [SerializeField] private Image bottom;
     [SerializeField] private Image bottomGauge;
     [SerializeField] private Image left;
@@ -59,6 +60,7 @@ public class GameManager : MonoBehaviour
         bossName.color = GlobalVariables.color1;
         bossHpGaugeFill.color = GlobalVariables.color1;
         top.color = GlobalVariables.color1;
+        topGauge.color = GlobalVariables.color1;
         bottom.color = GlobalVariables.color1;
         bottomGauge.color = GlobalVariables.color1;
         left.color = GlobalVariables.color1;

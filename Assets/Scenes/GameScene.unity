@@ -395,13 +395,14 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1939383324}
   m_Father: {fileID: 1571654054}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 40}
-  m_SizeDelta: {x: 45, y: 45}
+  m_SizeDelta: {x: 35, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &115942011
 MonoBehaviour:
@@ -423,7 +424,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: add7e097c98faea4e8647fb372e45c2b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9acd4ba21bf1ebf458023f5d62e18c19, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -902,7 +903,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 1058931433}
+  gameManagerObj: {fileID: 1832174439}
+  bossTransform: {fileID: 2044648088}
   chasePower: 8
+  maxDistance: 25
 --- !u!1001 &348625538
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1934,7 +1938,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 330585545}
-  m_PlaneDistance: 1
+  m_PlaneDistance: -10
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -2888,6 +2892,7 @@ MonoBehaviour:
   bossName: {fileID: 244657786}
   bossHpGaugeFill: {fileID: 43574413}
   top: {fileID: 115942011}
+  topGauge: {fileID: 1939383325}
   bottom: {fileID: 2003171696}
   bottomGauge: {fileID: 1098528211}
   left: {fileID: 728116614}
@@ -3003,6 +3008,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1005271147}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1939383323
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1939383324}
+  - component: {fileID: 1939383326}
+  - component: {fileID: 1939383325}
+  m_Layer: 5
+  m_Name: Image - TopGauge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1939383324
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939383323}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 115942010}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 62, y: 62}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1939383325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939383323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: add7e097c98faea4e8647fb372e45c2b, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 2
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1939383326
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939383323}
+  m_CullTransparentMesh: 1
 --- !u!1 &1939503140
 GameObject:
   m_ObjectHideFlags: 0
@@ -3258,6 +3338,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -7587244141481264162, guid: e1319811a62d2e54dbc2cbac6a74a506, type: 3}
+      propertyPath: dashGauge
+      value: 
+      objectReference: {fileID: 1098528211}
+    - target: {fileID: -7587244141481264162, guid: e1319811a62d2e54dbc2cbac6a74a506, type: 3}
       propertyPath: dushGauge
       value: 
       objectReference: {fileID: 1098528211}
@@ -3269,6 +3353,10 @@ PrefabInstance:
       propertyPath: groundTransform
       value: 
       objectReference: {fileID: 1893310346}
+    - target: {fileID: -7587244141481264162, guid: e1319811a62d2e54dbc2cbac6a74a506, type: 3}
+      propertyPath: bossCoreTransform
+      value: 
+      objectReference: {fileID: 2044648088}
     - target: {fileID: 949089764586782657, guid: e1319811a62d2e54dbc2cbac6a74a506, type: 3}
       propertyPath: gameManagerObj
       value: 
@@ -3297,6 +3385,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8736141316205918756, guid: e1319811a62d2e54dbc2cbac6a74a506, type: 3}
+      propertyPath: fireGauge
+      value: 
+      objectReference: {fileID: 1939383325}
     - target: {fileID: 8736141316205918756, guid: e1319811a62d2e54dbc2cbac6a74a506, type: 3}
       propertyPath: attackGauge
       value: 

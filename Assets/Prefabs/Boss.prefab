@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce7397966ac1717429d0aff4ed794bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossHpMax: 5
+  bossHpMax: 150
   hpGauge: {fileID: 0}
 --- !u!33 &2296195418687173701
 MeshFilter:

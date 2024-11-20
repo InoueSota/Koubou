@@ -26,7 +26,7 @@ public class PlayerMoveManager : MonoBehaviour
     [SerializeField] private float dashRange;
     [SerializeField] private float dashIntervalTime;
     private float dashIntervalTimer;
-    private Vector3 dushVector;
+    private Vector3 dashVector;
 
     [Header("Run")]
     [SerializeField] private float runSpeed;
@@ -39,7 +39,13 @@ public class PlayerMoveManager : MonoBehaviour
     private float reactionTimer;
 
     [Header("UI")]
-    [SerializeField] private Image dushGauge;
+    [SerializeField] private Image dashGauge;
+
+    [Header("Effects")]
+    [SerializeField] private ParticleSystem runParticle;
+
+    [Header("Other Object")]
+    [SerializeField] private Transform bossCoreTransform;
 
     void Start()
     {
@@ -47,6 +53,7 @@ public class PlayerMoveManager : MonoBehaviour
 
         halfSize = transform.localScale * 0.5f;
         targetPosition = transform.position;
+        saveVector = Vector3.forward;
 
         moveSpeed = normalSpeed;
         isRunning = false;
@@ -77,8 +84,13 @@ public class PlayerMoveManager : MonoBehaviour
     void Move()
     {
         // 高速移動を解消する
-        if (isRunning && !manager.GetInputManager().IsPush(manager.GetInputManager().dash))
+        if (isRunning && (!manager.GetInputManager().IsPush(manager.GetInputManager().dash) || 
+            (!manager.GetInputManager().IsPush(manager.GetInputManager().horizontal) && !manager.GetInputManager().IsPush(manager.GetInputManager().vertical))) ||
+            manager.GetInputManager().IsPush(manager.GetInputManager().lTrigger))
         {
+            // 走りエフェクトを非アクティブにする
+            runParticle.Stop();
+
             moveSpeed = normalSpeed;
             isRunning = false;
         }
@@ -100,12 +112,19 @@ public class PlayerMoveManager : MonoBehaviour
     }
     void Look()
     {
-        transform.LookAt(new Vector3(targetPosition.x, transform.position.y, targetPosition.z) + saveVector);
+        if (manager.GetInputManager().IsPush(manager.GetInputManager().lTrigger))
+        {
+            transform.LookAt(bossCoreTransform);
+        }
+        else
+        {
+            transform.LookAt(new Vector3(targetPosition.x, transform.position.y, targetPosition.z) + saveVector);
+        }
     }
     void Dash()
     {
         dashIntervalTimer -= Time.deltaTime;
-        dushGauge.fillAmount = 1f - dashIntervalTimer / dashIntervalTime;
+        dashGauge.fillAmount = 1f - dashIntervalTimer / dashIntervalTime;
 
         if (manager.GetInputManager().IsTrgger(manager.GetInputManager().dash) && dashIntervalTimer <= 0f)
         {
@@ -116,14 +135,14 @@ public class PlayerMoveManager : MonoBehaviour
             moveSpeed = runSpeed;
 
             // 移動量を取得する
-            dushVector.x = saveVector.x * dashRange;
-            dushVector.z = saveVector.z * dashRange;
+            dashVector.x = saveVector.x * dashRange;
+            dashVector.z = saveVector.z * dashRange;
 
             // 移動量を加算する
-            targetPosition += dushVector;
+            targetPosition += dashVector;
 
             // 前転する
-            transform.DORotate(Vector3.right * 360f, 0.4f, RotateMode.LocalAxisAdd);
+            transform.DORotate(Vector3.right * 360f, 0.4f, RotateMode.LocalAxisAdd).OnComplete(CheckFinishRotate);
 
             // ダッシュが連続で行えないようインターバルを設定する
             dashIntervalTimer = dashIntervalTime;
@@ -231,7 +250,16 @@ public class PlayerMoveManager : MonoBehaviour
             }
         }
     }
+    void CheckFinishRotate()
+    {
+        if (isRunning)
+        {
+            // 走りエフェクトをアクティブにする
+            runParticle.Play();
+        }
+    }
 
+    // Setter
     public void Reaction(Vector3 _toPlayer)
     {
         // 反動の設定
@@ -243,5 +271,11 @@ public class PlayerMoveManager : MonoBehaviour
 
         // ステージ内に収める
         ClampInStage();
+    }
+
+    // Getter
+    public Vector3 GetSaveVector()
+    {
+        return saveVector;
     }
 }
