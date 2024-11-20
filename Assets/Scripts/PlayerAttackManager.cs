@@ -7,27 +7,18 @@ public class PlayerAttackManager : MonoBehaviour
     private PlayerManager manager;
     private PlayerMoveManager moveManager;
 
-    [Header("Attack Parameter")]
-    [SerializeField] private float damageValue;
+    [Header("Slash")]
+    [SerializeField] private GameObject slashPrefab;
     [SerializeField] private float attackIntervalTime;
     private float attackIntervalTimer;
 
-    [Header("Bullet Parameter")]
+    [Header("Bullet")]
+    [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float fireIntervalTime;
     private float fireIntervalTimer;
 
     [Header("Hit")]
     [SerializeField] private float adjustDistance;
-
-    [Header("Slash")]
-    [SerializeField] private float slashRange;
-
-    [Header("Bullet")]
-    [SerializeField] private GameObject bulletPrefab;
-
-    [Header("EffectPrefabs")]
-    [SerializeField] private GameObject hitPrefab;
-    [SerializeField] private GameObject slashPrefab;
 
     [Header("UI")]
     [SerializeField] private Image attackGauge;
@@ -35,22 +26,19 @@ public class PlayerAttackManager : MonoBehaviour
 
     [Header("Other Object")]
     [SerializeField] private Transform bossCoreTransform;
-    private BossCoreManager bossCoreManager;
 
     void Start()
     {
         manager = GetComponent<PlayerManager>();
         moveManager = GetComponent<PlayerMoveManager>();
-
-        bossCoreManager = bossCoreTransform.GetComponent<BossCoreManager>();
     }
 
     public void ManualUpdate()
     {
-        Attack();
+        Slash();
         Fire();
     }
-    void Attack()
+    void Slash()
     {
         // 攻撃のインターバル計測
         attackIntervalTimer -= Time.deltaTime;
@@ -59,42 +47,13 @@ public class PlayerAttackManager : MonoBehaviour
         // 攻撃を行う
         if (attackIntervalTimer <= 0f && manager.GetInputManager().IsTrgger(manager.GetInputManager().attack))
         {
-            // Pillarに攻撃
-            foreach (GameObject pillar in GameObject.FindGameObjectsWithTag("Pillar"))
-            {
-                Vector3 pillarRePosition = pillar.transform.position;
+            // Slashの生成
+            GameObject slash = Instantiate(slashPrefab, transform.position, Quaternion.identity);
 
-                if (IsHitObject(ref pillarRePosition))
-                {
-                    Vector3 toPlayer = Vector3.Normalize(transform.position - pillarRePosition);
-                    Vector3 diffVector = toPlayer * adjustDistance;
+            // 変数を与える
+            slash.GetComponent<SlashManager>().Initialize(moveManager, bossCoreTransform, adjustDistance);
 
-                    // HitEffect作成
-                    Instantiate(hitPrefab, pillarRePosition + diffVector, Quaternion.identity);
-
-                    // 反動
-                    moveManager.Reaction(toPlayer);
-                }
-            }
-
-            // BossCoreに攻撃
-            Vector3 bossCoreRePosition = bossCoreTransform.position;
-
-            if (IsHitObject(ref bossCoreRePosition))
-            {
-                Vector3 toPlayer = Vector3.Normalize(transform.position - bossCoreRePosition);
-                Vector3 diffVector = toPlayer * adjustDistance;
-
-                // HitEffect作成
-                Instantiate(hitPrefab, bossCoreRePosition + diffVector, Quaternion.identity);
-
-                // Damageを与える
-                bossCoreManager.Damage(damageValue);
-            }
-
-            // SlashEffect作成
-            Instantiate(slashPrefab, transform.position, Quaternion.identity);
-
+            // インターバルの再設定
             attackIntervalTimer = attackIntervalTime;
         }
     }
@@ -125,20 +84,5 @@ public class PlayerAttackManager : MonoBehaviour
             // インターバルの再設定
             fireIntervalTimer = fireIntervalTime;
         }
-    }
-    bool IsHitObject(ref Vector3 _objectPosition)
-    {
-        // 高さをPlayerに合わせた新座標
-        _objectPosition = new(_objectPosition.x, transform.position.y, _objectPosition.z);
-
-        // 距離を取得
-        float distance = Vector3.Distance(transform.position, _objectPosition);
-
-        // SlashRange内のPillarを攻撃する
-        if (distance < slashRange)
-        {
-            return true;
-        }
-        return false;
     }
 }

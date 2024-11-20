@@ -13,6 +13,7 @@ public class BulletManager : MonoBehaviour
 
     [Header("Effects")]
     [SerializeField] private ParticleSystem bulletParticle;
+    [SerializeField] private GameObject bossBulletHitPrefab;
     [SerializeField] private GameObject hitPrefab;
 
     [Header("Rotation")]
@@ -78,7 +79,7 @@ public class BulletManager : MonoBehaviour
             Vector3 diffVector = toPlayer * adjustDistance;
 
             // HitEffectçÏê¨
-            Instantiate(hitPrefab, bossCoreRePosition + diffVector, Quaternion.identity);
+            Instantiate(bossBulletHitPrefab, bossCoreRePosition + diffVector, Quaternion.identity);
 
             // DamageÇó^Ç¶ÇÈ
             bossCoreManager.Damage(damageValue);

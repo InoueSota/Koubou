@@ -51,8 +51,9 @@ MonoBehaviour:
   lifeTime: 1.5
   moveSpeed: 20
   bulletParticle: {fileID: 8064585676449615123}
+  bossBulletHitPrefab: {fileID: 7596689838677904813, guid: 5b6a3a29921d4fe4780ebbba9f1fb137, type: 3}
   hitPrefab: {fileID: 7596689838677904813, guid: 0a1bea8d2c21f4f4aa86316089e63953, type: 3}
-  bossCoreTransform: {fileID: 0}
+  rotateSpeed: 0
 --- !u!33 &30698177168755511
 MeshFilter:
   m_ObjectHideFlags: 0

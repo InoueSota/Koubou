@@ -27,6 +27,7 @@ public class PlayerMoveManager : MonoBehaviour
     [SerializeField] private float dashIntervalTime;
     private float dashIntervalTimer;
     private Vector3 dashVector;
+    private bool isDashing;
 
     [Header("Run")]
     [SerializeField] private float runSpeed;
@@ -56,6 +57,9 @@ public class PlayerMoveManager : MonoBehaviour
         saveVector = Vector3.forward;
 
         moveSpeed = normalSpeed;
+
+        // フラグ類
+        isDashing = false;
         isRunning = false;
     }
 
@@ -112,13 +116,17 @@ public class PlayerMoveManager : MonoBehaviour
     }
     void Look()
     {
-        if (manager.GetInputManager().IsPush(manager.GetInputManager().lTrigger))
+        // 前転中は処理を通さない
+        if (!isDashing)
         {
-            transform.LookAt(bossCoreTransform);
-        }
-        else
-        {
-            transform.LookAt(new Vector3(targetPosition.x, transform.position.y, targetPosition.z) + saveVector);
+            if (manager.GetInputManager().IsPush(manager.GetInputManager().lTrigger))
+            {
+                transform.LookAt(bossCoreTransform);
+            }
+            else
+            {
+                transform.LookAt(new Vector3(targetPosition.x, transform.position.y, targetPosition.z) + saveVector);
+            }
         }
     }
     void Dash()
@@ -128,6 +136,12 @@ public class PlayerMoveManager : MonoBehaviour
 
         if (manager.GetInputManager().IsTrgger(manager.GetInputManager().dash) && dashIntervalTimer <= 0f)
         {
+            // 前転する
+            transform.DORotate(Vector3.right * 360f, 0.4f, RotateMode.LocalAxisAdd).OnComplete(CheckFinishRotate);
+
+            // 前転フラグをtrueにする
+            isDashing = true;
+
             // 走りフラグをtrueにする
             isRunning = true;
 
@@ -140,9 +154,6 @@ public class PlayerMoveManager : MonoBehaviour
 
             // 移動量を加算する
             targetPosition += dashVector;
-
-            // 前転する
-            transform.DORotate(Vector3.right * 360f, 0.4f, RotateMode.LocalAxisAdd).OnComplete(CheckFinishRotate);
 
             // ダッシュが連続で行えないようインターバルを設定する
             dashIntervalTimer = dashIntervalTime;
@@ -252,6 +263,9 @@ public class PlayerMoveManager : MonoBehaviour
     }
     void CheckFinishRotate()
     {
+        // 前転フラグをfalseにする
+        isDashing = false;
+
         if (isRunning)
         {
             // 走りエフェクトをアクティブにする

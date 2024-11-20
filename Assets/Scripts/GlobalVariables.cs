@@ -13,6 +13,6 @@ public class GlobalVariables : MonoBehaviour
 
     // êF
     public static int colorNum = 0;
-    public static Color color1 = new(1f, 1f, 0.0f);
-    public static Color color2 = new(1f, 0f, 1f);
+    public static Color color1 = new(1f, 1f, 0f);
+    public static Color color2 = new(1f, 0.3f, 0f);
 }

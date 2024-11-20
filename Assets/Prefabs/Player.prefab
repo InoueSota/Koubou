@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1544789953480720336}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -146,6 +146,7 @@ MonoBehaviour:
   slashRange: 4
   bulletPrefab: {fileID: 1048081524965694827, guid: eb309bb0fffa13f48862616ee1f31622, type: 3}
   hitPrefab: {fileID: 7596689838677904813, guid: 0a1bea8d2c21f4f4aa86316089e63953, type: 3}
+  bossSlashHitPrefab: {fileID: 7596689838677904813, guid: 35e368650ba79a547a326979c56696a1, type: 3}
   slashPrefab: {fileID: 4541742321681109738, guid: ba3f5a7a1a44d054581492d8c21a2782, type: 3}
   attackGauge: {fileID: 0}
   fireGauge: {fileID: 0}
