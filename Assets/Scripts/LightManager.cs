@@ -4,12 +4,11 @@ using UnityEngine.UI;
 public class LightManager : MonoBehaviour
 {
     // 他コンポーネント取得
+    private PlayerPowerUpManager powerUpManager;
     private GameManager gameManager;
 
     [Header("Light")]
     [SerializeField] private GameObject lightObj;
-    [SerializeField] private float lightTime;
-    private float lightTimer;
     private bool isLighting;
 
     [Header("Gauge")]
@@ -17,12 +16,21 @@ public class LightManager : MonoBehaviour
     [SerializeField] private float gaugeTime;
     private float gaugeTimer;
 
+    [Header("Abutton")]
+    [SerializeField] private Image aButtonImage;
+    [SerializeField] private float aButtonChasePower;
+    private Color aButtonTargetColor;
+
     void Start()
     {
+        powerUpManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPowerUpManager>();
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 
         lightObj.SetActive(false);
         isLighting = false;
+
+        aButtonTargetColor = new(1f, 1f, 1f, 0f);
+        aButtonImage.color = aButtonTargetColor;
     }
 
     void Update()
@@ -43,24 +51,64 @@ public class LightManager : MonoBehaviour
             // タイマーの再設定
             if (gaugeTimer >= gaugeTime)
             {
-                lightTimer = lightTime;
                 lightObj.SetActive(true);
                 isLighting = true;
             }
         }
         else
         {
-            lightTimer -= Time.deltaTime;
+            // Playerの座標を調整
+            Vector3 playerRePosition = powerUpManager.transform.position;
 
-            gauge.fillAmount = lightTimer / lightTime;
-
-            // タイマーの再設定
-            if (lightTimer <= 0f)
+            if (IsHitObject(ref playerRePosition))
             {
-                gaugeTimer = 0f;
-                lightObj.SetActive(false);
-                isLighting = false;
+                aButtonTargetColor = Color.white;
             }
+            else
+            {
+                aButtonTargetColor = new(1f, 1f, 1f, 0f);
+            }
+
+            // 目標色に向かって色を変更する
+            aButtonImage.color += (aButtonTargetColor - aButtonImage.color) * (aButtonChasePower * Time.deltaTime);
         }
+    }
+    bool IsHitObject(ref Vector3 _objectPosition)
+    {
+        // 高さをPlayerに合わせた新座標
+        _objectPosition = new(_objectPosition.x, transform.position.y, _objectPosition.z);
+
+        // 距離を取得
+        float distance = Vector3.Distance(transform.position, _objectPosition);
+
+        // LightRange内か判定する
+        if (distance < powerUpManager.GetLightRange())
+        {
+            return true;
+        }
+        return false;
+    }
+
+    // Getter
+    public bool GetIsLightning()
+    {
+        return isLighting;
+    }
+
+    // Setter
+    public void SetDark()
+    {
+        // ゲージ初期化
+        gaugeTimer = 0f;
+
+        // 暗くする
+        lightObj.SetActive(false);
+
+        // フラグ初期化
+        isLighting = false;
+
+        // Aボタンの色を透明にする
+        aButtonTargetColor = new(1f, 1f, 1f, 0f);
+        aButtonImage.color = aButtonTargetColor;
     }
 }

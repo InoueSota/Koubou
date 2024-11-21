@@ -7,6 +7,7 @@ TagManager:
   - Transition
   - Pillar
   - BossCore
+  - Light
   layers:
   - Default
   - TransparentFX

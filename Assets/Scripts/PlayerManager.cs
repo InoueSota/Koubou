@@ -5,6 +5,7 @@ public class PlayerManager : MonoBehaviour
     // 自コンポーネント取得
     private PlayerMoveManager moveManager;
     private PlayerAttackManager attackManager;
+    private PlayerPowerUpManager powerUpManager;
 
     [Header("他オブジェクト取得")]
     [SerializeField] private GameObject gameManagerObj;
@@ -15,6 +16,7 @@ public class PlayerManager : MonoBehaviour
     {
         moveManager = GetComponent<PlayerMoveManager>();
         attackManager = GetComponent<PlayerAttackManager>();
+        powerUpManager = GetComponent<PlayerPowerUpManager>();
 
         inputManager = gameManagerObj.GetComponent<InputManager>();
         gameManager = gameManagerObj.GetComponent<GameManager>();
@@ -25,7 +27,8 @@ public class PlayerManager : MonoBehaviour
         // 入力情報を最新に更新する
         inputManager.GetAllInput();
 
-        moveManager.ManualUpdate();
+        powerUpManager.ManualUpdate();
+        moveManager.ManualUpdate(powerUpManager.GetIsPowerUpFrame());
         attackManager.ManualUpdate();
     }
 

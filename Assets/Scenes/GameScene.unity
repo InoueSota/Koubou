@@ -1563,6 +1563,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6940479057805304402, guid: b945e7f36ca87d649a9f164e1645f9f9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6940479057805304402, guid: b945e7f36ca87d649a9f164e1645f9f9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -20
+      objectReference: {fileID: 0}
     - target: {fileID: 8287702566863251538, guid: b945e7f36ca87d649a9f164e1645f9f9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12
@@ -3595,10 +3603,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8565660738882957173, guid: e1319811a62d2e54dbc2cbac6a74a506, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 3681ef91b384f05469af4bfe2d763061, type: 2}
     - target: {fileID: 8736141316205918756, guid: e1319811a62d2e54dbc2cbac6a74a506, type: 3}
       propertyPath: fireGauge
       value: 

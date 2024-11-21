@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 949089764586782657}
   - component: {fileID: -7587244141481264162}
   - component: {fileID: 8736141316205918756}
+  - component: {fileID: 2664264048561184562}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -139,18 +140,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77a34d65dff44394abc720356002f386, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageValue: 5
+  slashPrefab: {fileID: 4541742321681109738, guid: ba3f5a7a1a44d054581492d8c21a2782, type: 3}
   attackIntervalTime: 0.3
+  bulletPrefab: {fileID: 1048081524965694827, guid: eb309bb0fffa13f48862616ee1f31622, type: 3}
   fireIntervalTime: 0.5
   adjustDistance: 0.8
-  slashRange: 4
-  bulletPrefab: {fileID: 1048081524965694827, guid: eb309bb0fffa13f48862616ee1f31622, type: 3}
-  hitPrefab: {fileID: 7596689838677904813, guid: 0a1bea8d2c21f4f4aa86316089e63953, type: 3}
-  bossSlashHitPrefab: {fileID: 7596689838677904813, guid: 35e368650ba79a547a326979c56696a1, type: 3}
-  slashPrefab: {fileID: 4541742321681109738, guid: ba3f5a7a1a44d054581492d8c21a2782, type: 3}
   attackGauge: {fileID: 0}
   fireGauge: {fileID: 0}
   bossCoreTransform: {fileID: 0}
+--- !u!114 &2664264048561184562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544789953480720336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f34c16259a57048429ee62953a98a70d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpTime: 10
+  lightRange: 3
+  normalMat: {fileID: 2100000, guid: 07c4e69e54daa9f45a5d8c3fcabf5997, type: 2}
+  powerUpMat: {fileID: 2100000, guid: 3681ef91b384f05469af4bfe2d763061, type: 2}
 --- !u!1 &2440053188443241739
 GameObject:
   m_ObjectHideFlags: 0

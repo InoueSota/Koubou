@@ -63,14 +63,14 @@ public class PlayerMoveManager : MonoBehaviour
         isRunning = false;
     }
 
-    public void ManualUpdate()
+    public void ManualUpdate(bool _isPowerUpFrame)
     {
         if (manager.GetGameManager().GetIsGameActive())
         {
             // ïΩñ 
             InputVector();
             Move();
-            Dash();
+            Dash(_isPowerUpFrame);
             Look();
             ClampInStage();
 
@@ -108,6 +108,9 @@ public class PlayerMoveManager : MonoBehaviour
         {
             saveVector.x = inputVector.x;
             saveVector.z = inputVector.z;
+
+            // ê≥ãKâª
+            saveVector = Vector3.Normalize(saveVector);
         }
 
         // à⁄ìÆó Çâ¡éZÇ∑ÇÈ
@@ -129,12 +132,12 @@ public class PlayerMoveManager : MonoBehaviour
             }
         }
     }
-    void Dash()
+    void Dash(bool _isPowerUpFrame)
     {
         dashIntervalTimer -= Time.deltaTime;
         dashGauge.fillAmount = 1f - dashIntervalTimer / dashIntervalTime;
 
-        if (manager.GetInputManager().IsTrgger(manager.GetInputManager().dash) && dashIntervalTimer <= 0f)
+        if (!_isPowerUpFrame && manager.GetInputManager().IsTrgger(manager.GetInputManager().dash) && dashIntervalTimer <= 0f)
         {
             // ëOì]Ç∑ÇÈ
             transform.DORotate(Vector3.right * 360f, 0.4f, RotateMode.LocalAxisAdd).OnComplete(CheckFinishRotate);
