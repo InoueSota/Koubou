@@ -6,6 +6,7 @@ public class PlayerAttackManager : MonoBehaviour
     // Manager取得
     private PlayerManager manager;
     private PlayerMoveManager moveManager;
+    private PlayerPowerUpManager powerUpManager;
 
     [Header("Slash")]
     [SerializeField] private GameObject slashPrefab;
@@ -31,6 +32,7 @@ public class PlayerAttackManager : MonoBehaviour
     {
         manager = GetComponent<PlayerManager>();
         moveManager = GetComponent<PlayerMoveManager>();
+        powerUpManager = GetComponent<PlayerPowerUpManager>();
     }
 
     public void ManualUpdate()
@@ -51,7 +53,7 @@ public class PlayerAttackManager : MonoBehaviour
             GameObject slash = Instantiate(slashPrefab, transform.position, Quaternion.identity);
 
             // 変数を与える
-            slash.GetComponent<PlayerSlashManager>().Initialize(moveManager, bossCoreTransform, adjustDistance);
+            slash.GetComponent<PlayerSlashManager>().Initialize(moveManager, bossCoreTransform, adjustDistance, powerUpManager.GetIsPowerUp());
 
             // インターバルの再設定
             attackIntervalTimer = attackIntervalTime;

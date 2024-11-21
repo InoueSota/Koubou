@@ -111,6 +111,10 @@ public class PlayerPowerUpManager : MonoBehaviour
     }
 
     // Getter
+    public bool GetIsPowerUp()
+    {
+        return isPowerUp;
+    }
     public bool GetIsPowerUpFrame()
     {
         return isPowerUpFrame;

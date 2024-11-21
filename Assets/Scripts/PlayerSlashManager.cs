@@ -8,6 +8,9 @@ public class PlayerSlashManager : MonoBehaviour
     // 受け取る変数
     private float adjustDistance;
 
+    // フラグ類
+    private bool isPowerUp;
+
     [Header("Attack Parameter")]
     [SerializeField] private float damageValue;
 
@@ -17,18 +20,20 @@ public class PlayerSlashManager : MonoBehaviour
     [Header("EffectPrefabs")]
     [SerializeField] private GameObject hitPrefab;
     [SerializeField] private GameObject bossSlashHitPrefab;
+    [SerializeField] private GameObject godRayPrefab;
 
     // Other Objects
     private Transform bossCoreTransform;
     private BossCoreManager bossCoreManager;
 
-    public void Initialize(PlayerMoveManager _moveManager, Transform _bossCoreTransform, float _adjustDistance)
+    public void Initialize(PlayerMoveManager _moveManager, Transform _bossCoreTransform, float _adjustDistance, bool _isPowerUp)
     {
         // 変数を受け取る
         moveManager = _moveManager;
         bossCoreTransform = _bossCoreTransform;
         bossCoreManager = bossCoreTransform.GetComponent<BossCoreManager>();
         adjustDistance = _adjustDistance;
+        isPowerUp = _isPowerUp;
 
         // 攻撃
         Attack();
@@ -51,6 +56,38 @@ public class PlayerSlashManager : MonoBehaviour
 
                 // 反動
                 moveManager.Reaction(toPlayer);
+
+                // パワーアップ状態だと柱を壊し、光芒を出現させる
+                if (isPowerUp)
+                {
+                    // 光芒を出現させる
+                    Instantiate(godRayPrefab, new(pillarRePosition.x, 0f, pillarRePosition.z), Quaternion.identity);
+
+                    // 柱を破壊する
+                    Destroy(pillar);
+                }
+
+                break;
+            }
+        }
+
+        // Lightに攻撃
+        foreach (GameObject Light in GameObject.FindGameObjectsWithTag("Light"))
+        {
+            Vector3 lightRePosition = Light.transform.position;
+
+            if (IsHitObject(ref lightRePosition))
+            {
+                Vector3 toPlayer = Vector3.Normalize(transform.position - lightRePosition);
+                Vector3 diffVector = toPlayer * adjustDistance;
+
+                // HitEffect作成
+                Instantiate(hitPrefab, lightRePosition + diffVector, Quaternion.identity);
+
+                // 反動
+                moveManager.Reaction(toPlayer);
+
+                break;
             }
         }
 

@@ -70,6 +70,23 @@ public class PlayerBulletManager : MonoBehaviour
             }
         }
 
+        // LightÇ…çUåÇ
+        foreach (GameObject Light in GameObject.FindGameObjectsWithTag("Light"))
+        {
+            Vector3 lightRePosition = Light.transform.position;
+
+            if (IsHitObject(ref lightRePosition))
+            {
+                Vector3 diffVector = -moveVector * adjustDistance;
+
+                // HitEffectçÏê¨
+                Instantiate(hitPrefab, lightRePosition + diffVector, Quaternion.identity);
+
+                // è¡ñ≈Ç∑ÇÈ
+                DestroySelf();
+            }
+        }
+
         // BossCoreÇ…çUåÇ
         Vector3 bossCoreRePosition = bossCoreTransform.position;
 

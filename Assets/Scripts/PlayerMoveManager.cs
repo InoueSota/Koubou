@@ -1,4 +1,5 @@
 using DG.Tweening;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -209,26 +210,18 @@ public class PlayerMoveManager : MonoBehaviour
             // Pillar
             foreach (GameObject pillar in GameObject.FindGameObjectsWithTag("Pillar"))
             {
-                // XŽ²”»’è
-                float xBetween = Mathf.Abs(targetPosition.x - pillar.transform.position.x);
-                float xDoubleSize = halfSize.x * 2f;
-
-                // ZŽ²”»’è
-                float zBetween = Mathf.Abs(targetPosition.z - pillar.transform.position.z);
-                float zDoubleSize = halfSize.z * 2f;
-
-                if (zBetween < zDoubleSize && xBetween < xDoubleSize)
+                if (CheckHitObject(pillar.transform.position, true))
                 {
-                    if (pillar.transform.position.x < targetPosition.x)
-                    {
-                        targetPosition.x = pillar.transform.position.x + 0.5f + halfSize.x;
-                        break;
-                    }
-                    else
-                    {
-                        targetPosition.x = pillar.transform.position.x - 0.5f - halfSize.x;
-                        break;
-                    }
+                    break;
+                }
+            }
+
+            // Light
+            foreach (GameObject light in GameObject.FindGameObjectsWithTag("Light"))
+            {
+                if (CheckHitObject(light.transform.position, true))
+                {
+                    break;
                 }
             }
         }
@@ -240,29 +233,62 @@ public class PlayerMoveManager : MonoBehaviour
             // Pillar
             foreach (GameObject pillar in GameObject.FindGameObjectsWithTag("Pillar"))
             {
-                // XŽ²”»’è
-                float xBetween = Mathf.Abs(targetPosition.x - pillar.transform.position.x);
-                float xDoubleSize = halfSize.x * 2f;
-
-                // ZŽ²”»’è
-                float zBetween = Mathf.Abs(targetPosition.z - pillar.transform.position.z);
-                float zDoubleSize = halfSize.z * 2f;
-
-                if (zBetween < zDoubleSize && xBetween < xDoubleSize)
+                if (CheckHitObject(pillar.transform.position, false))
                 {
-                    if (pillar.transform.position.z < targetPosition.z)
-                    {
-                        targetPosition.z = pillar.transform.position.z + 0.5f + halfSize.z;
-                        break;
-                    }
-                    else
-                    {
-                        targetPosition.z = pillar.transform.position.z - 0.5f - halfSize.z;
-                        break;
-                    }
+                    break;
+                }
+            }
+
+            // Light
+            foreach (GameObject light in GameObject.FindGameObjectsWithTag("Light"))
+            {
+                if (CheckHitObject(light.transform.position, false))
+                {
+                    break;
                 }
             }
         }
+    }
+    bool CheckHitObject(Vector3 _otherPosition, bool _isXaxis)
+    {
+        // XŽ²”»’è
+        float xBetween = Mathf.Abs(targetPosition.x - _otherPosition.x);
+        float xDoubleSize = halfSize.x * 2f;
+
+        // ZŽ²”»’è
+        float zBetween = Mathf.Abs(targetPosition.z - _otherPosition.z);
+        float zDoubleSize = halfSize.z * 2f;
+
+        if (zBetween < zDoubleSize && xBetween < xDoubleSize)
+        {
+            if (_isXaxis)
+            {
+                if (_otherPosition.x < targetPosition.x)
+                {
+                    targetPosition.x = _otherPosition.x + 0.5f + halfSize.x;
+                    return true;
+                }
+                else
+                {
+                    targetPosition.x = _otherPosition.x - 0.5f - halfSize.x;
+                    return true;
+                }
+            }
+            else
+            {
+                if (_otherPosition.z < targetPosition.z)
+                {
+                    targetPosition.z = _otherPosition.z + 0.5f + halfSize.z;
+                    return true;
+                }
+                else
+                {
+                    targetPosition.z = _otherPosition.z - 0.5f - halfSize.z;
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     void CheckFinishRotate()
     {

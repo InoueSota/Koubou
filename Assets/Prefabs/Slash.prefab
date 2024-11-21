@@ -4967,6 +4967,7 @@ MonoBehaviour:
   slashRange: 4
   hitPrefab: {fileID: 7596689838677904813, guid: 0a1bea8d2c21f4f4aa86316089e63953, type: 3}
   bossSlashHitPrefab: {fileID: 7596689838677904813, guid: 35e368650ba79a547a326979c56696a1, type: 3}
+  godRayPrefab: {fileID: 6128758275331564049, guid: 3f6488fc3eeae284a834d8e9705d8acd, type: 3}
 --- !u!1 &5723647882285133367
 GameObject:
   m_ObjectHideFlags: 0

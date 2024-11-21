@@ -60,7 +60,8 @@ public class LightManager : MonoBehaviour
             // Playerの座標を調整
             Vector3 playerRePosition = powerUpManager.transform.position;
 
-            if (IsHitObject(ref playerRePosition))
+            // AButtonの表示
+            if (IsHitObject(ref playerRePosition, powerUpManager.GetLightRange()))
             {
                 aButtonTargetColor = Color.white;
             }
@@ -73,7 +74,7 @@ public class LightManager : MonoBehaviour
             aButtonImage.color += (aButtonTargetColor - aButtonImage.color) * (aButtonChasePower * Time.deltaTime);
         }
     }
-    bool IsHitObject(ref Vector3 _objectPosition)
+    bool IsHitObject(ref Vector3 _objectPosition, float _range)
     {
         // 高さをPlayerに合わせた新座標
         _objectPosition = new(_objectPosition.x, transform.position.y, _objectPosition.z);
@@ -81,8 +82,8 @@ public class LightManager : MonoBehaviour
         // 距離を取得
         float distance = Vector3.Distance(transform.position, _objectPosition);
 
-        // LightRange内か判定する
-        if (distance < powerUpManager.GetLightRange())
+        // Range内か判定する
+        if (distance < _range)
         {
             return true;
         }
