@@ -51,7 +51,7 @@ public class PlayerAttackManager : MonoBehaviour
             GameObject slash = Instantiate(slashPrefab, transform.position, Quaternion.identity);
 
             // 変数を与える
-            slash.GetComponent<SlashManager>().Initialize(moveManager, bossCoreTransform, adjustDistance);
+            slash.GetComponent<PlayerSlashManager>().Initialize(moveManager, bossCoreTransform, adjustDistance);
 
             // インターバルの再設定
             attackIntervalTimer = attackIntervalTime;
@@ -79,7 +79,7 @@ public class PlayerAttackManager : MonoBehaviour
             }
 
             // Bulletに移動方向を代入
-            bullet.GetComponent<BulletManager>().Initialize(bossCoreTransform, moveVector, adjustDistance);
+            bullet.GetComponent<PlayerBulletManager>().Initialize(bossCoreTransform, moveVector, adjustDistance);
 
             // インターバルの再設定
             fireIntervalTimer = fireIntervalTime;

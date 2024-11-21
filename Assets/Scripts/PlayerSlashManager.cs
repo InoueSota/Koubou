@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SlashManager : MonoBehaviour
+public class PlayerSlashManager : MonoBehaviour
 {
     // PlayerComponent
     private PlayerMoveManager moveManager;

@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class BulletManager : MonoBehaviour
+public class PlayerBulletManager : MonoBehaviour
 {
     [Header("Parameter")]
     [SerializeField] private float damageValue;
