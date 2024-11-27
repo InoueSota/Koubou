@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class BossManager : MonoBehaviour
 {
+    // My Component
+    private BossCoreManager bossCoreManager;
+
     [Header("Child Objects")]
     [SerializeField] private Transform ignoreRotate;
     [SerializeField] private Transform cubeParent;
@@ -60,6 +63,10 @@ public class BossManager : MonoBehaviour
     {
         moveType = MoveType.IDLE;
 
+        // ダメージを受けないようにする
+        bossCoreManager = GetComponent<BossCoreManager>();
+        bossCoreManager.SetCanHit(false);
+
         // Idle
         idleTimer = idleTime;
     }
@@ -97,6 +104,9 @@ public class BossManager : MonoBehaviour
                     // キューブを戻す
                     cubeParent.gameObject.SetActive(true);
 
+                    // ダメージを受けないようにする
+                    bossCoreManager.SetCanHit(false);
+
                     ChangeMoveType(MoveType.IDLE);
                 }
 
@@ -112,6 +122,9 @@ public class BossManager : MonoBehaviour
 
                 // インターバルの初期化
                 idleTimer = idleTime;
+
+                // ダメージを受けないようにする
+                bossCoreManager.SetCanHit(false);
 
                 break;
             case MoveType.GETCLOSE:
@@ -217,6 +230,9 @@ public class BossManager : MonoBehaviour
         // 待機終了
         if (!isFinishMeteoriteIdle && meteoriteIdleTimer <= 0f)
         {
+            // ダメージを受けるようにする
+            bossCoreManager.SetCanHit(true);
+
             // キューブを消す
             cubeParent.gameObject.SetActive(false);
 

@@ -76,7 +76,7 @@ public class PlayerBulletManager : MonoBehaviour
         {
             Vector3 pillarRePosition = pillar.transform.position;
 
-            if (IsHitObject(ref pillarRePosition))
+            if (IsHitObject(ref pillarRePosition, 0.5f))
             {
                 Vector3 diffVector = -moveVector * adjustDistance;
 
@@ -93,7 +93,7 @@ public class PlayerBulletManager : MonoBehaviour
         {
             Vector3 lightRePosition = Light.transform.position;
 
-            if (IsHitObject(ref lightRePosition))
+            if (IsHitObject(ref lightRePosition, 0.5f))
             {
                 Vector3 diffVector = -moveVector * adjustDistance;
 
@@ -107,8 +107,8 @@ public class PlayerBulletManager : MonoBehaviour
 
         // BossCoreに攻撃
         Vector3 bossCoreRePosition = bossCoreTransform.position;
-
-        if (IsHitObject(ref bossCoreRePosition))
+        
+        if (IsHitObject(ref bossCoreRePosition, 0.5f))
         {
             Vector3 toPlayer = Vector3.Normalize(transform.position - bossCoreRePosition);
             Vector3 diffVector = toPlayer * adjustDistance;
@@ -121,6 +121,15 @@ public class PlayerBulletManager : MonoBehaviour
 
             // 消滅する
             DestroySelf();
+        }
+        else if (IsHitObject(ref bossCoreRePosition, 2f))
+        {
+            // ダメージを受けられる状態か
+            if (!bossCoreManager.GetCanHit())
+            {
+                // 消滅する
+                DestroySelf();
+            }
         }
     }
 
@@ -138,7 +147,7 @@ public class PlayerBulletManager : MonoBehaviour
         // 消滅
         Destroy(gameObject);
     }
-    bool IsHitObject(ref Vector3 _objectPosition)
+    bool IsHitObject(ref Vector3 _objectPosition, float _range)
     {
         // 高さをPlayerに合わせた新座標
         _objectPosition = new(_objectPosition.x, transform.position.y, _objectPosition.z);
@@ -147,7 +156,7 @@ public class PlayerBulletManager : MonoBehaviour
         float distance = Vector3.Distance(transform.position, _objectPosition);
 
         // 一定距離内のオブジェクトを攻撃する
-        if (distance < 0.5f)
+        if (distance < _range)
         {
             return true;
         }

@@ -94,7 +94,7 @@ public class PlayerSlashManager : MonoBehaviour
         // BossCoreÇ…çUåÇ
         Vector3 bossCoreRePosition = bossCoreTransform.position;
 
-        if (IsHitObject(ref bossCoreRePosition))
+        if (IsHitObject(ref bossCoreRePosition) && bossCoreManager.GetCanHit())
         {
             Vector3 toPlayer = Vector3.Normalize(transform.position - bossCoreRePosition);
             Vector3 diffVector = toPlayer * adjustDistance;
