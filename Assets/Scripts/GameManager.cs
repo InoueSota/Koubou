@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
@@ -5,11 +6,11 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    // 自コンポーネント取得
+    // My Component
     private InputManager inputManager;
     private MenuManager menuManager;
 
-    // 他コンポーネント取得
+    [Header("Other Component")]
     [SerializeField] private Volume volume;
     private Bloom bloom;
 
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private EffectSlashManager slashManager;
 
     [Header("Materials")]
+    [SerializeField] private Material emissionPlayer;
     [SerializeField] private Material boss001;
     [SerializeField] private Material slash001;
     [SerializeField] private Material slash002;
@@ -32,22 +34,32 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image leftGauge;
     [SerializeField] private Image right;
 
+    [Header("ClearDirection")]
+    [SerializeField] private BossCoreManager bossCoreManager;
+    [SerializeField] private float bloomTime;
+    private float bloomTimer;
+    [SerializeField] private float bloomTargetIntensity;
+    private float bloomOriginIntensity;
+    private float bloomOriginThreshold;
+    private bool isGameClear;
+
     void Start()
     {
         inputManager = GetComponent<InputManager>();
         menuManager = GetComponent<MenuManager>();
 
-        if (volume.profile.TryGet<Bloom>(out bloom))
-        {
-            bloom.tint.Override(GlobalVariables.color1);
-        }
+        if (volume.profile.TryGet<Bloom>(out bloom)) { bloom.tint.Override(GlobalVariables.color1); }
 
         // Particle Systems
         slashManager.SetColor();
 
         // Materials
-        var factor = Mathf.Pow(2, 3f);
+        var factor = Mathf.Pow(2, 2.5f);
         Color intensityColor1 = new(GlobalVariables.color1.r * factor, GlobalVariables.color1.g * factor, GlobalVariables.color1.b * factor);
+        emissionPlayer.SetColor("_EmissionColor", intensityColor1);
+
+        factor = Mathf.Pow(2, 3f);
+        intensityColor1 = new(GlobalVariables.color1.r * factor, GlobalVariables.color1.g * factor, GlobalVariables.color1.b * factor);
         boss001.SetColor("_EmissionColor", intensityColor1);
 
         factor = Mathf.Pow(2, 4f);
@@ -71,6 +83,40 @@ public class GameManager : MonoBehaviour
     {
         // 入力情報を最新に更新する
         inputManager.GetAllInput();
+
+        Clear();
+    }
+
+    void Clear()
+    {
+        // クリアチェック
+        if (!isGameClear && bossCoreManager.GetBossHp() <= 0f)
+        {
+            // Bloom演出初期化
+            bloomTimer = bloomTime;
+            bloomOriginIntensity = bloom.intensity.value;
+
+            isGameClear = true;
+        }
+
+        if (isGameClear)
+        {
+            // 経過時間計測
+            bloomTimer -= Time.deltaTime;
+            bloomTimer = Mathf.Clamp(bloomTimer, 0f, bloomTime);
+
+            float t = bloomTimer / bloomTime;
+
+            // Color
+            Color tmpColor = Color.Lerp(Color.white, GlobalVariables.color1, t * t);
+            if (volume.profile.TryGet<Bloom>(out bloom)) { bloom.tint.Override(tmpColor); }
+
+            // Threshold
+            bloom.threshold.value = Mathf.Lerp(0f, 1f, t * t);
+
+            // Intensity
+            bloom.intensity.value = Mathf.Lerp(bloomTargetIntensity, bloomOriginIntensity, t * t);
+        }
     }
 
     void LateUpdate()

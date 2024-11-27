@@ -47,7 +47,7 @@ public class PlayerPowerUpManager : MonoBehaviour
     void Light()
     {
         // Œõ‚ðŽó‚¯Žæ‚ê‚é‚©”»’è‚ðŽæ‚é
-        if (manager.GetInputManager().IsTrgger(manager.GetInputManager().decide))
+        if (manager.GetInputManager().IsTrgger(manager.GetInputManager().attack))
         {
             foreach (GameObject light in GameObject.FindGameObjectsWithTag("Light"))
             {

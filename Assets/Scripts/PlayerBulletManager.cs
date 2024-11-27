@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class PlayerBulletManager : MonoBehaviour
 {
+    // My Component
+    private MeshRenderer meshRenderer;
+
     [Header("Parameter")]
     [SerializeField] private float damageValue;
     [SerializeField] private float lifeTime;
@@ -16,14 +19,17 @@ public class PlayerBulletManager : MonoBehaviour
     [SerializeField] private GameObject bossBulletHitPrefab;
     [SerializeField] private GameObject hitPrefab;
 
-    [Header("Rotation")]
-    [SerializeField] private float rotateSpeed;
+    [Header("Material")]
+    [SerializeField] private Material powerUpMat;
+
+    [Header("Particle Systems")]
+    [SerializeField] private ParticleSystemRenderer smokeSystem;
 
     // OtherObjects
     private Transform bossCoreTransform;
     private BossCoreManager bossCoreManager;
 
-    public void Initialize(Transform _bossCoreTransform, Vector3 _moveVector, float _adjustDistance)
+    public void Initialize(Transform _bossCoreTransform, Vector3 _moveVector, float _adjustDistance, bool _isPowerUp)
     {
         // âÒì]Ç∑ÇÈ
         transform.DORotate(Vector3.right * 360f, 0.4f, RotateMode.WorldAxisAdd).SetLoops(-1, LoopType.Restart);
@@ -40,6 +46,18 @@ public class PlayerBulletManager : MonoBehaviour
 
         // ê∂ë∂éûä‘ÇÃê›íË
         lifeTimer = lifeTime;
+
+        // ã≠âªèÛë‘Ç©Ç«Ç§Ç©Ç…ÇÊÇ¡ÇƒêFÇïœÇ¶ÇÈ
+        if (_isPowerUp)
+        {
+            meshRenderer = GetComponent<MeshRenderer>();
+
+            // MaterialÇïœçXÇ∑ÇÈ
+            meshRenderer.material = powerUpMat;
+
+            // Particle Systems
+            smokeSystem.material = powerUpMat;
+        }
     }
 
     void Update()

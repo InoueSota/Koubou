@@ -9,6 +9,7 @@ public class PlayerAttackManager : MonoBehaviour
     private PlayerPowerUpManager powerUpManager;
 
     [Header("Slash")]
+    [SerializeField] private GameObject smallSlashPrefab;
     [SerializeField] private GameObject slashPrefab;
     [SerializeField] private float attackIntervalTime;
     private float attackIntervalTimer;
@@ -35,22 +36,31 @@ public class PlayerAttackManager : MonoBehaviour
         powerUpManager = GetComponent<PlayerPowerUpManager>();
     }
 
-    public void ManualUpdate()
+    public void ManualUpdate(bool _isPowerUpFrame)
     {
-        Slash();
+        Slash(_isPowerUpFrame);
         Fire();
     }
-    void Slash()
+    void Slash(bool _isPowerUpFrame)
     {
         // 攻撃のインターバル計測
         attackIntervalTimer -= Time.deltaTime;
         attackGauge.fillAmount = 1f - attackIntervalTimer / attackIntervalTime;
 
         // 攻撃を行う
-        if (attackIntervalTimer <= 0f && manager.GetInputManager().IsTrgger(manager.GetInputManager().attack))
+        if (!_isPowerUpFrame && attackIntervalTimer <= 0f && manager.GetInputManager().IsTrgger(manager.GetInputManager().attack))
         {
-            // Slashの生成
-            GameObject slash = Instantiate(slashPrefab, transform.position, Quaternion.identity);
+            GameObject slash = null;
+
+            // 強化状態かどうかによって生成するslashの種類を変える
+            if (powerUpManager.GetIsPowerUp())
+            {
+                // Slashの生成
+                slash = Instantiate(slashPrefab, transform.position, Quaternion.identity);
+            } else {
+                // SmallSlashの生成
+                slash = Instantiate(smallSlashPrefab, transform.position, Quaternion.identity);
+            }
 
             // 変数を与える
             slash.GetComponent<PlayerSlashManager>().Initialize(moveManager, bossCoreTransform, adjustDistance, powerUpManager.GetIsPowerUp());
@@ -81,7 +91,7 @@ public class PlayerAttackManager : MonoBehaviour
             }
 
             // Bulletに移動方向を代入
-            bullet.GetComponent<PlayerBulletManager>().Initialize(bossCoreTransform, moveVector, adjustDistance);
+            bullet.GetComponent<PlayerBulletManager>().Initialize(bossCoreTransform, moveVector, adjustDistance, powerUpManager.GetIsPowerUp());
 
             // インターバルの再設定
             fireIntervalTimer = fireIntervalTime;

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -7587244141481264162}
   - component: {fileID: 8736141316205918756}
   - component: {fileID: 2664264048561184562}
+  - component: {fileID: -783221351484185251}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -140,6 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77a34d65dff44394abc720356002f386, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smallSlashPrefab: {fileID: 4541742321681109738, guid: fa96c1a8259c9274ea00f28cc2ed6633, type: 3}
   slashPrefab: {fileID: 4541742321681109738, guid: ba3f5a7a1a44d054581492d8c21a2782, type: 3}
   attackIntervalTime: 0.3
   bulletPrefab: {fileID: 1048081524965694827, guid: eb309bb0fffa13f48862616ee1f31622, type: 3}
@@ -164,6 +166,24 @@ MonoBehaviour:
   lightRange: 3
   normalMat: {fileID: 2100000, guid: 07c4e69e54daa9f45a5d8c3fcabf5997, type: 2}
   powerUpMat: {fileID: 2100000, guid: 3681ef91b384f05469af4bfe2d763061, type: 2}
+--- !u!114 &-783221351484185251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544789953480720336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 772e92b3a05dc3a4c8560ed6f2565a0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpMax: 3
+  damageCoolTime: 3
+  hpObjs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &2440053188443241739
 GameObject:
   m_ObjectHideFlags: 0

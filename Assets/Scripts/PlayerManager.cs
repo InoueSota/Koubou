@@ -28,8 +28,8 @@ public class PlayerManager : MonoBehaviour
         inputManager.GetAllInput();
 
         powerUpManager.ManualUpdate();
-        moveManager.ManualUpdate(powerUpManager.GetIsPowerUpFrame());
-        attackManager.ManualUpdate();
+        moveManager.ManualUpdate();
+        attackManager.ManualUpdate(powerUpManager.GetIsPowerUpFrame());
     }
 
     // Getter

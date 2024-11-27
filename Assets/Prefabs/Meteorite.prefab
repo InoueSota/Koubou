@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5854384422646743626}
-  - component: {fileID: 100748316903736539}
+  - component: {fileID: -6586078077127899792}
   - component: {fileID: 30698177168755511}
   - component: {fileID: 9214920768122865401}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: Meteorite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,13 +29,13 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1200279310561564876}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &100748316903736539
+--- !u!114 &-6586078077127899792
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,17 +44,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1048081524965694827}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d84707468bd674494942caa39a3699, type: 3}
+  m_Script: {fileID: 11500000, guid: 86992856daf8876488838f0e9534b9ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageValue: 1
-  lifeTime: 1.5
-  moveSpeed: 20
-  bulletParticle: {fileID: 8064585676449615123}
-  bossBulletHitPrefab: {fileID: 7596689838677904813, guid: 5b6a3a29921d4fe4780ebbba9f1fb137, type: 3}
-  hitPrefab: {fileID: 7596689838677904813, guid: 0a1bea8d2c21f4f4aa86316089e63953, type: 3}
-  powerUpMat: {fileID: 2100000, guid: 3681ef91b384f05469af4bfe2d763061, type: 2}
-  smokeSystem: {fileID: 612380490835670708}
+  fallTime: 2
+  startHeight: 15
+  explosion: {fileID: 3649387568543993298, guid: e1f2722e3531ebc4fbde3d0fdf09e6c0, type: 3}
+  pillarPrefab: {fileID: 801280905367440815, guid: 75e8e112c8199e542ae5d414555922c2, type: 3}
 --- !u!33 &30698177168755511
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -86,7 +82,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 07c4e69e54daa9f45a5d8c3fcabf5997, type: 2}
+  - {fileID: 2100000, guid: aa2d35142088c3849a25e9c21e9cf800, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -224,7 +220,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.3
+      scalar: 0.6
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -395,8 +391,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.18
-      minScalar: 0.12
+      scalar: 0.3
+      minScalar: 0.18
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -4888,7 +4884,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 07c4e69e54daa9f45a5d8c3fcabf5997, type: 2}
+  - {fileID: 2100000, guid: aa2d35142088c3849a25e9c21e9cf800, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

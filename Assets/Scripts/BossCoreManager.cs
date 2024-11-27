@@ -20,9 +20,16 @@ public class BossCoreManager : MonoBehaviour
         hpGauge.value = bossHp / bossHpMax;
     }
 
+    // Setter
     public void Damage(float _damageValue)
     {
         bossHp -= _damageValue;
         bossHp = Mathf.Clamp(bossHp, 0f, bossHpMax);
+    }
+
+    // Getter
+    public float GetBossHp()
+    {
+        return bossHp;
     }
 }

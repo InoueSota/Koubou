@@ -1,5 +1,4 @@
 using DG.Tweening;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -64,14 +63,14 @@ public class PlayerMoveManager : MonoBehaviour
         isRunning = false;
     }
 
-    public void ManualUpdate(bool _isPowerUpFrame)
+    public void ManualUpdate()
     {
         if (manager.GetGameManager().GetIsGameActive())
         {
             // •½–Ê
             InputVector();
             Move();
-            Dash(_isPowerUpFrame);
+            Dash();
             Look();
             ClampInStage();
 
@@ -133,12 +132,12 @@ public class PlayerMoveManager : MonoBehaviour
             }
         }
     }
-    void Dash(bool _isPowerUpFrame)
+    void Dash()
     {
         dashIntervalTimer -= Time.deltaTime;
         dashGauge.fillAmount = 1f - dashIntervalTimer / dashIntervalTime;
 
-        if (!_isPowerUpFrame && manager.GetInputManager().IsTrgger(manager.GetInputManager().dash) && dashIntervalTimer <= 0f)
+        if (manager.GetInputManager().IsTrgger(manager.GetInputManager().dash) && dashIntervalTimer <= 0f)
         {
             // ‘O“]‚·‚é
             transform.DORotate(Vector3.right * 360f, 0.4f, RotateMode.LocalAxisAdd).OnComplete(CheckFinishRotate);

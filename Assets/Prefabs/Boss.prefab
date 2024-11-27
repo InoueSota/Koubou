@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5390236578625936198}
   - component: {fileID: 8517387855302456175}
   - component: {fileID: 4382854370884284643}
+  - component: {fileID: 7547654025071603643}
   m_Layer: 0
   m_Name: 05
   m_TagString: Untagged
@@ -86,6 +87,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7547654025071603643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918405537506275704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b7177edbd4812c4089724aa85341740, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerObj: {fileID: 0}
+  damageRange: 1
 --- !u!1 &1544789953480720336
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,10 +151,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ignoreRotate: {fileID: 5754180972013155580}
   cubeParent: {fileID: 8951668665734460401}
+  playerTransform: {fileID: 0}
+  pillarParent: {fileID: 0}
   coreRotateChasePower: 10
   coreRotateAddValue: -150
-  idleRotateChasePower: 10
+  rotateChasePower: 10
   idleRotateAddValue: 300
+  idleTime: 4
+  getCloseRotateAddValue: 800
+  getCloseSpeed: 15
+  judgeIntervalTime: 1
+  meteoritePrefab: {fileID: 1048081524965694827, guid: 419570925cb95464d91b6a61cfc7266b, type: 3}
+  fallInfomationPrefab: {fileID: 6001500583276759251, guid: 094041455c5d82e41bd036cb92c5f36e, type: 3}
+  meteoriteRange: 10
+  meteoriteIdleTime: 3
+  meteoriteIntervalTime: 0.5
+  afterMeteoriteTime: 4
 --- !u!114 &6425533696851485723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,6 +281,7 @@ GameObject:
   - component: {fileID: 2267655787347205151}
   - component: {fileID: 962466093619670535}
   - component: {fileID: 5731964735437662916}
+  - component: {fileID: 3095660402904594540}
   m_Layer: 0
   m_Name: 03
   m_TagString: Untagged
@@ -329,6 +357,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3095660402904594540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4591397292682922132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b7177edbd4812c4089724aa85341740, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerObj: {fileID: 0}
+  damageRange: 1
 --- !u!1 &5186369117657056162
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,6 +382,7 @@ GameObject:
   - component: {fileID: 1315978308956092644}
   - component: {fileID: 4609602471022215432}
   - component: {fileID: 6420999809289166801}
+  - component: {fileID: 6051647235152389213}
   m_Layer: 0
   m_Name: 04
   m_TagString: Untagged
@@ -415,6 +458,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6051647235152389213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5186369117657056162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b7177edbd4812c4089724aa85341740, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerObj: {fileID: 0}
+  damageRange: 1
 --- !u!1 &5975490933044438047
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,6 +515,7 @@ GameObject:
   - component: {fileID: 897439686182893692}
   - component: {fileID: 553071960272062184}
   - component: {fileID: 5846016378377059756}
+  - component: {fileID: 76222082996993471}
   m_Layer: 0
   m_Name: 02
   m_TagString: Untagged
@@ -533,6 +591,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &76222082996993471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7810835569407962333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b7177edbd4812c4089724aa85341740, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerObj: {fileID: 0}
+  damageRange: 1
 --- !u!1 &8354774348696436099
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,6 +616,7 @@ GameObject:
   - component: {fileID: 7937166150697340137}
   - component: {fileID: 4933910054395518116}
   - component: {fileID: 7842730774666773985}
+  - component: {fileID: 6294631912117167656}
   m_Layer: 0
   m_Name: 01
   m_TagString: Untagged
@@ -619,3 +692,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6294631912117167656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8354774348696436099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b7177edbd4812c4089724aa85341740, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerObj: {fileID: 0}
+  damageRange: 1
