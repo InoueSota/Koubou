@@ -41,7 +41,7 @@ public class MeteoriteManager : MonoBehaviour
     void FinishFall()
     {
         // プレイヤーが一定距離にいたらダメージを与える
-        if (Vector3.Distance(transform.position, playerRePosition) <= 2.5f)
+        if (Vector3.Distance(transform.position, playerRePosition) <= 0.8f)
         {
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHpManager>().Damage();
         }

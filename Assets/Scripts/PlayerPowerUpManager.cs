@@ -21,11 +21,16 @@ public class PlayerPowerUpManager : MonoBehaviour
     [SerializeField] private Material normalMat;
     [SerializeField] private Material powerUpMat;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip powerUpClip;
+    private AudioSource audioSource;
+
     void Start()
     {
         // GetComponent
         manager = GetComponent<PlayerManager>();
         meshRenderer = GetComponent<MeshRenderer>();
+        audioSource = GetComponent<AudioSource>();
 
         // フラグ類初期化
         isPowerUp = false;
@@ -68,6 +73,9 @@ public class PlayerPowerUpManager : MonoBehaviour
 
                         // Material変更
                         meshRenderer.material = powerUpMat;
+
+                        // 音を鳴らす
+                        audioSource.PlayOneShot(powerUpClip);
 
                         // インターバルの設定
                         powerUpTimer = powerUpTime;

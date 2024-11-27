@@ -99,8 +99,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7177edbd4812c4089724aa85341740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coreTransform: {fileID: 5412931535846981801}
   playerObj: {fileID: 0}
   damageRange: 1
+  spreadTime: 2
+  angleTarget: 45
+  diffTarget: 8
+  fireTime: 6
+  addAnglePower: 30
+  fireIntervalTime: 0.4
+  bulletPrefab: {fileID: 1048081524965694827, guid: 9173e6acc5f926e4693ad88790aa9a84, type: 3}
+  idleTime: 0.5
+  returnTime: 2
 --- !u!1 &1544789953480720336
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,6 +124,7 @@ GameObject:
   - component: {fileID: 6425533696851485723}
   - component: {fileID: 2296195418687173701}
   - component: {fileID: 8565660738882957173}
+  - component: {fileID: 8025124224580298953}
   m_Layer: 0
   m_Name: Boss
   m_TagString: BossCore
@@ -151,13 +162,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ignoreRotate: {fileID: 5754180972013155580}
   cubeParent: {fileID: 8951668665734460401}
+  cubeManager:
+  - {fileID: 6294631912117167656}
+  - {fileID: 76222082996993471}
+  - {fileID: 3095660402904594540}
+  - {fileID: 6051647235152389213}
+  - {fileID: 7547654025071603643}
   playerTransform: {fileID: 0}
   pillarParent: {fileID: 0}
   coreRotateChasePower: 10
   coreRotateAddValue: -150
   rotateChasePower: 10
   idleRotateAddValue: 300
-  idleTime: 4
+  idleTime: 3
   getCloseRotateAddValue: 800
   getCloseSpeed: 15
   judgeIntervalTime: 1
@@ -167,6 +184,8 @@ MonoBehaviour:
   meteoriteIdleTime: 3
   meteoriteIntervalTime: 0.5
   afterMeteoriteTime: 4
+  mgrIdleTime: 1
+  mgrTime: 11
 --- !u!114 &6425533696851485723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,6 +200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossHpMax: 150
   hpGauge: {fileID: 0}
+  damageClip: {fileID: 8300000, guid: 384b25fe331ddb0449f9df049255dad3, type: 3}
 --- !u!33 &2296195418687173701
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -234,6 +254,103 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!82 &8025124224580298953
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544789953480720336}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.4
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3429754090215270521
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,8 +486,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7177edbd4812c4089724aa85341740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coreTransform: {fileID: 5412931535846981801}
   playerObj: {fileID: 0}
   damageRange: 1
+  spreadTime: 2
+  angleTarget: 45
+  diffTarget: 8
+  fireTime: 6
+  addAnglePower: 30
+  fireIntervalTime: 0.4
+  bulletPrefab: {fileID: 1048081524965694827, guid: 9173e6acc5f926e4693ad88790aa9a84, type: 3}
+  idleTime: 0.5
+  returnTime: 2
 --- !u!1 &5186369117657056162
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,8 +597,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7177edbd4812c4089724aa85341740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coreTransform: {fileID: 5412931535846981801}
   playerObj: {fileID: 0}
   damageRange: 1
+  spreadTime: 2
+  angleTarget: 45
+  diffTarget: 8
+  fireTime: 6
+  addAnglePower: 30
+  fireIntervalTime: 0.4
+  bulletPrefab: {fileID: 1048081524965694827, guid: 9173e6acc5f926e4693ad88790aa9a84, type: 3}
+  idleTime: 0.5
+  returnTime: 2
 --- !u!1 &5975490933044438047
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,8 +740,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7177edbd4812c4089724aa85341740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coreTransform: {fileID: 5412931535846981801}
   playerObj: {fileID: 0}
   damageRange: 1
+  spreadTime: 2
+  angleTarget: 45
+  diffTarget: 8
+  fireTime: 6
+  addAnglePower: 30
+  fireIntervalTime: 0.4
+  bulletPrefab: {fileID: 1048081524965694827, guid: 9173e6acc5f926e4693ad88790aa9a84, type: 3}
+  idleTime: 0.5
+  returnTime: 2
 --- !u!1 &8354774348696436099
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,5 +851,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7177edbd4812c4089724aa85341740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coreTransform: {fileID: 5412931535846981801}
   playerObj: {fileID: 0}
   damageRange: 1
+  spreadTime: 2
+  angleTarget: 45
+  diffTarget: 8
+  fireTime: 6
+  addAnglePower: 30
+  fireIntervalTime: 0.4
+  bulletPrefab: {fileID: 1048081524965694827, guid: 9173e6acc5f926e4693ad88790aa9a84, type: 3}
+  idleTime: 0.5
+  returnTime: 2

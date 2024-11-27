@@ -48,9 +48,14 @@ public class PlayerMoveManager : MonoBehaviour
     [Header("Other Object")]
     [SerializeField] private Transform bossCoreTransform;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip dashClip;
+    private AudioSource audioSource;
+
     void Start()
     {
         manager = GetComponent<PlayerManager>();
+        audioSource = GetComponent<AudioSource>();
 
         halfSize = transform.localScale * 0.5f;
         targetPosition = transform.position;
@@ -157,6 +162,9 @@ public class PlayerMoveManager : MonoBehaviour
 
             // 移動量を加算する
             targetPosition += dashVector;
+
+            // 音を鳴らす
+            audioSource.PlayOneShot(dashClip);
 
             // ダッシュが連続で行えないようインターバルを設定する
             dashIntervalTimer = dashIntervalTime;

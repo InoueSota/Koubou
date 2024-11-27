@@ -10,12 +10,18 @@ public class BossCoreManager : MonoBehaviour
     [Header("Gauge")]
     [SerializeField] private Slider hpGauge;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip damageClip;
+    private AudioSource audioSource;
+
     // ダメージを受けられる状態かフラグ
     private bool canHit;
 
     void Start()
     {
         bossHp = bossHpMax;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -28,6 +34,9 @@ public class BossCoreManager : MonoBehaviour
     {
         bossHp -= _damageValue;
         bossHp = Mathf.Clamp(bossHp, 0f, bossHpMax);
+
+        // 音を鳴らす
+        audioSource.PlayOneShot(damageClip);
     }
     public void SetCanHit(bool _canHit)
     {

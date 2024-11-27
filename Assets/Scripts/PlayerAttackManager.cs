@@ -29,11 +29,17 @@ public class PlayerAttackManager : MonoBehaviour
     [Header("Other Object")]
     [SerializeField] private Transform bossCoreTransform;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip slashClip;
+    [SerializeField] private AudioClip fireClip;
+    private AudioSource audioSource;
+
     void Start()
     {
         manager = GetComponent<PlayerManager>();
         moveManager = GetComponent<PlayerMoveManager>();
         powerUpManager = GetComponent<PlayerPowerUpManager>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void ManualUpdate(bool _isPowerUpFrame)
@@ -65,6 +71,9 @@ public class PlayerAttackManager : MonoBehaviour
             // 変数を与える
             slash.GetComponent<PlayerSlashManager>().Initialize(moveManager, bossCoreTransform, adjustDistance, powerUpManager.GetIsPowerUp());
 
+            // 音を鳴らす
+            audioSource.PlayOneShot(slashClip);
+
             // インターバルの再設定
             attackIntervalTimer = attackIntervalTime;
         }
@@ -92,6 +101,9 @@ public class PlayerAttackManager : MonoBehaviour
 
             // Bulletに移動方向を代入
             bullet.GetComponent<PlayerBulletManager>().Initialize(bossCoreTransform, moveVector, adjustDistance, powerUpManager.GetIsPowerUp());
+
+            // 音を鳴らす
+            audioSource.PlayOneShot(fireClip);
 
             // インターバルの再設定
             fireIntervalTimer = fireIntervalTime;

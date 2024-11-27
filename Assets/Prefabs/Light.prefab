@@ -331,7 +331,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightObj: {fileID: 2953854474781882092}
   gauge: {fileID: 2452174004857049452}
-  gaugeTime: 2
+  gaugeMag: 3
+  gaugeTime: 60
   aButtonImage: {fileID: 6962249066867399056}
   aButtonChasePower: 30
 --- !u!1 &6066940137789751174

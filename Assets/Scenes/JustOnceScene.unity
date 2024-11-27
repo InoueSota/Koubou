@@ -685,7 +685,7 @@ MonoBehaviour:
   secondaryCamera: {fileID: 5607325390643336280}
   blackSpriteRenderer: {fileID: 3709969603044365018}
   blackEase: 21
-  easeTime: 1.5
+  easeTime: 2.5
 --- !u!4 &1615798250660012106
 Transform:
   m_ObjectHideFlags: 0

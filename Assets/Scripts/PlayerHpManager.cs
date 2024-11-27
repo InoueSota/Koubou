@@ -10,12 +10,19 @@ public class PlayerHpManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private GameObject[] hpObjs;
+    [SerializeField] private Animator vignetteAnim;
+
+    [Header("Sounds")]
+    [SerializeField] private AudioClip getDamageClip;
+    private AudioSource audioSource;
 
     void Start()
     {
         hp = hpMax;
 
         damageCoolTimer = 0f;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -36,6 +43,12 @@ public class PlayerHpManager : MonoBehaviour
 
             // HPクールタイム設定
             damageCoolTimer = damageCoolTime;
+
+            // 音を鳴らす
+            audioSource.PlayOneShot(getDamageClip);
+
+            // Vignetteのアニメーションを動かす
+            vignetteAnim.SetTrigger("Start");
         }
     }
 }

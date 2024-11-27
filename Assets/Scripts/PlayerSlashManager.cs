@@ -22,6 +22,9 @@ public class PlayerSlashManager : MonoBehaviour
     [SerializeField] private GameObject bossSlashHitPrefab;
     [SerializeField] private GameObject godRayPrefab;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip koubou;
+
     // Other Objects
     private Transform bossCoreTransform;
     private BossCoreManager bossCoreManager;
@@ -60,12 +63,15 @@ public class PlayerSlashManager : MonoBehaviour
                 // パワーアップ状態だと柱を壊し、光芒を出現させる
                 if (isPowerUp)
                 {
+                    // 音を鳴らす
+                    AudioSource.PlayClipAtPoint(koubou, transform.position);
+
                     // 光芒を出現させる
                     Instantiate(godRayPrefab, new(pillarRePosition.x, 0f, pillarRePosition.z), Quaternion.identity);
 
-                    // 柱を破壊する
-                    Destroy(pillar);
                 }
+                // 柱を破壊する
+                Destroy(pillar);
 
                 break;
             }

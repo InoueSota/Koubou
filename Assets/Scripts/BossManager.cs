@@ -8,6 +8,7 @@ public class BossManager : MonoBehaviour
     [Header("Child Objects")]
     [SerializeField] private Transform ignoreRotate;
     [SerializeField] private Transform cubeParent;
+    [SerializeField] private BossCubeManager[] cubeManager;
 
     [Header("Other Objects")]
     [SerializeField] private Transform playerTransform;
@@ -18,7 +19,8 @@ public class BossManager : MonoBehaviour
     {
         IDLE,
         GETCLOSE,
-        METEORITE
+        METEORITE,
+        MERRYGOROUND
     }
     private MoveType moveType = MoveType.IDLE;
 
@@ -59,10 +61,15 @@ public class BossManager : MonoBehaviour
     private bool isFinishMeteoriteIdle;
     private bool isFinishMeteoriteCreate;
 
+    [Header("MerryGoRound")]
+    [SerializeField] private float mgrIdleTime;
+    private float mgrIdleTimer;
+    [SerializeField] private float mgrTime;
+    private float mgrTimer;
+    private bool isFinishMgrIdle;
+
     void Start()
     {
-        moveType = MoveType.IDLE;
-
         // ダメージを受けないようにする
         bossCoreManager = GetComponent<BossCoreManager>();
         bossCoreManager.SetCanHit(false);
@@ -111,6 +118,20 @@ public class BossManager : MonoBehaviour
                 }
 
                 break;
+            case MoveType.MERRYGOROUND:
+
+                TypeMerryGoRound();
+
+                // 待機終了
+                if (mgrTimer <= 0f)
+                {
+                    // ダメージを受けないようにする
+                    bossCoreManager.SetCanHit(false);
+
+                    ChangeMoveType(MoveType.IDLE);
+                }
+
+                break;
         }
     }
     void ChangeMoveType(MoveType _moveType)
@@ -151,6 +172,16 @@ public class BossManager : MonoBehaviour
                 isFinishMeteoriteCreate = false;
 
                 break;
+            case MoveType.MERRYGOROUND:
+
+                // インターバルの初期化
+                mgrIdleTimer = mgrIdleTime;
+                mgrTimer = mgrTime;
+
+                // フラグの初期化
+                isFinishMgrIdle = false;
+
+                break;
         }
 
         // 遷移する
@@ -158,13 +189,15 @@ public class BossManager : MonoBehaviour
     }
     void ChangeFromIdle()
     {
-        // ランダムの数字を取得する
-        int randomNumber = Random.Range(0, 99);
+        ChangeMoveType(MoveType.MERRYGOROUND);
 
-        if (randomNumber % 4 == 0)
-        { ChangeMoveType(MoveType.METEORITE); }
-        else
-        { ChangeMoveType(MoveType.GETCLOSE); }
+        // ランダムの数字を取得する
+        //int randomNumber = Random.Range(0, 99);
+
+        //if (randomNumber % 4 == 0)
+        //{ ChangeMoveType(MoveType.METEORITE); }
+        //else
+        //{ ChangeMoveType(MoveType.GETCLOSE); }
     }
     void CoreRotate()
     {
@@ -302,6 +335,37 @@ public class BossManager : MonoBehaviour
                 // 隕石を落下させた後の待機時間を計測
                 afterMeteoriteTimer -= Time.deltaTime;
             }
+        }
+    }
+    void TypeMerryGoRound()
+    {
+        // 隕石行動までの待機時間を計測
+        mgrIdleTimer -= Time.deltaTime;
+
+        // 待機終了
+        if (!isFinishMgrIdle && mgrIdleTimer <= 0f)
+        {
+            // キューブに開始指示を出す
+            for (int i = 0; i < cubeManager.Length; i++)
+            {
+                if (i != 4)
+                {
+                    cubeManager[i].SetMgrStart();
+                }
+            }
+
+            // ダメージを受けるようにする
+            bossCoreManager.SetCanHit(true);
+
+            // 待機終了フラグをtrueにする
+            isFinishMgrIdle = true;
+        }
+
+        // 待機が終了したあと
+        if (isFinishMgrIdle)
+        {
+            // mgr攻撃をしている時間を計測
+            mgrTimer -= Time.deltaTime;
         }
     }
     void CubeRotate(float _rotateAddValue)

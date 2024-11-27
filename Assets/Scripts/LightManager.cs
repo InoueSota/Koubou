@@ -13,6 +13,7 @@ public class LightManager : MonoBehaviour
 
     [Header("Gauge")]
     [SerializeField] private Image gauge;
+    [SerializeField] private float gaugeMag;
     [SerializeField] private float gaugeTime;
     private float gaugeTimer;
 
@@ -44,8 +45,17 @@ public class LightManager : MonoBehaviour
     {
         if (!isLighting)
         {
-            gaugeTimer += Time.deltaTime;
+            // Playerの座標を調整
+            Vector3 playerRePosition = powerUpManager.transform.position;
 
+            if (IsHitObject(ref playerRePosition, powerUpManager.GetLightRange()))
+            {
+                gaugeTimer += Time.deltaTime * gaugeMag;
+            }
+            else
+            {
+                gaugeTimer += Time.deltaTime;
+            }
             gauge.fillAmount = gaugeTimer / gaugeTime;
 
             // タイマーの再設定

@@ -7,6 +7,7 @@ public class TitleManager : MonoBehaviour
 {
     // 自コンポーネント取得
     private InputManager inputManager;
+    private AudioSource audioSource;
 
     // 他コンポーネント取得
     [SerializeField] private Volume volume;
@@ -46,9 +47,14 @@ public class TitleManager : MonoBehaviour
     [Header("Camera")]
     [SerializeField] private Camera mainCamera;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip decide;
+    [SerializeField] private AudioClip choose;
+
     void Start()
     {
         inputManager = GetComponent<InputManager>();
+        audioSource = GetComponent<AudioSource>();
 
         if (GameObject.FindWithTag("Transition"))
         {
@@ -101,11 +107,13 @@ public class TitleManager : MonoBehaviour
                 // インゲームに遷移する
                 if (inputManager.IsTrgger(inputManager.decide) && !transition.GetIsTransitionNow())
                 {
+                    audioSource.PlayOneShot(decide);
                     transition.SetTransition("GameScene");
                 }
 
                 if (inputManager.IsTrgger(inputManager.vertical) && inputManager.ReturnInputValue(inputManager.vertical) < 0f)
                 {
+                    audioSource.PlayOneShot(choose);
                     ToQuit();
                     contents = Contents.QUIT;
                 }
@@ -121,6 +129,7 @@ public class TitleManager : MonoBehaviour
 
                 if (inputManager.IsTrgger(inputManager.vertical) && inputManager.ReturnInputValue(inputManager.vertical) > 0f)
                 {
+                    audioSource.PlayOneShot(choose);
                     ToNewGame();
                     contents = Contents.NEWGAME;
                 }
