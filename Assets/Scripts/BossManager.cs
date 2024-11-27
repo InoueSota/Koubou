@@ -189,7 +189,7 @@ public class BossManager : MonoBehaviour
     }
     void ChangeFromIdle()
     {
-        ChangeMoveType(MoveType.MERRYGOROUND);
+        ChangeMoveType(MoveType.METEORITE);
 
         // ƒ‰ƒ“ƒ_ƒ€‚Ì”š‚ğæ“¾‚·‚é
         //int randomNumber = Random.Range(0, 99);

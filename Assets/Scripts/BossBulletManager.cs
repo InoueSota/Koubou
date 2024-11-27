@@ -11,9 +11,6 @@ public class BossBulletManager : MonoBehaviour
     [SerializeField] private float moveTime;
     [SerializeField] private ParticleSystem bulletParticle;
 
-    [Header("Sounds")]
-    [SerializeField] private AudioClip explosionClip;
-
     public void Initialize(Vector3 _targetPosition, PlayerHpManager _playerHpManager)
     {
         // ˆÚ“®‚·‚é
@@ -30,9 +27,6 @@ public class BossBulletManager : MonoBehaviour
     {
         // Effect‚ÌeqŠÖŒW‚ğ‰ğœ‚·‚é
         bulletParticle.transform.parent = null;
-
-        // ‰¹‚ğ–Â‚ç‚·
-        AudioSource.PlayClipAtPoint(explosionClip, transform.position);
 
         // ParticleSystem‚Ì’â~
         bulletParticle.Stop();

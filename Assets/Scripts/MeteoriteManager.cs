@@ -20,6 +20,9 @@ public class MeteoriteManager : MonoBehaviour
     // プレイヤー
     private Vector3 playerRePosition;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip explosionClip;
+
     public void Initialize(Vector3 _randomPosition, GameObject _fallInfomation, Transform _pillarParent, Vector3 _playerPosition)
     {
         // 地面から一定の高さにする
@@ -52,6 +55,9 @@ public class MeteoriteManager : MonoBehaviour
         // 柱
         GameObject pillar = Instantiate(pillarPrefab, new(transform.position.x, 3f, transform.position.z), Quaternion.identity);
         pillar.transform.parent = pillarParent;
+
+        // 音を鳴らす
+        AudioSource.PlayClipAtPoint(explosionClip, transform.position);
 
         // 落下先表示消滅
         Destroy(fallInfomation);

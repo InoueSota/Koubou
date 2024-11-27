@@ -51,6 +51,7 @@ MonoBehaviour:
   startHeight: 15
   explosion: {fileID: 3649387568543993298, guid: e1f2722e3531ebc4fbde3d0fdf09e6c0, type: 3}
   pillarPrefab: {fileID: 801280905367440815, guid: 75e8e112c8199e542ae5d414555922c2, type: 3}
+  explosionClip: {fileID: 8300000, guid: 5596b8cbe5a8ba44abeef53025087bca, type: 3}
 --- !u!33 &30698177168755511
 MeshFilter:
   m_ObjectHideFlags: 0
